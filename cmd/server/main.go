@@ -13,6 +13,7 @@ func main() {
 		log.Fatal(err)
 	}
 
+	a.StartMetrics()
 	err = a.Run()
 	if err != nil {
 		log.Fatal(err)

@@ -4,11 +4,16 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/GTech1256/junior-test/internal/metrics"
+
 	"github.com/GTech1256/junior-test/internal/app/endpoint"
 	"github.com/GTech1256/junior-test/internal/app/mw"
 	"github.com/GTech1256/junior-test/internal/app/service"
 	"github.com/labstack/echo/v4"
 )
+
+// TODO: перенести в env
+const METRICS_ADDRESS = "127.0.0.1:8082"
 
 type App struct {
 	e    *endpoint.Endpoint
@@ -41,4 +46,10 @@ func (a *App) Run() error {
 	}
 
 	return nil
+}
+
+func (a *App) StartMetrics() {
+	go func() {
+		metrics.Listen(METRICS_ADDRESS)
+	}()
 }

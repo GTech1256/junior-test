@@ -24,7 +24,10 @@ func New(s Service) *Endpoint {
 }
 
 func (e *Endpoint) Handler(c echo.Context) error {
-
+	start := time.Now()
+	defer func() {
+		observeRequest(time.Since(start), c.Response().Status)
+	}()
 	daysLeft, err := e.s.DaysLeft(service.TimeMyDate)
 
 	if err != nil {
